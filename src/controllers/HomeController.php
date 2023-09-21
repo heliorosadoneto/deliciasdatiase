@@ -2,19 +2,24 @@
 namespace src\controllers;
 
 use \core\Controller;
+use src\models\Vendas;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
-    public function index() {
-        $this->render('home', ['nome' => 'Bonieky']);
+    public function index()
+    {
+        $this->render('home');
     }
 
-    public function sobre() {
-        $this->render('sobre');
-    }
+    public function add()
+    {
+        header('Content-Type: application/json');
+        $data = json_decode(file_get_contents('php://input'));
 
-    public function sobreP($args) {
-        print_r($args);
+        if(isset($data)):
+            Vendas::insert($data)->execute();
+        endif;
+       
     }
-
 }
