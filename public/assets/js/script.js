@@ -34,6 +34,7 @@ function finalizarCompra() {
     const trocoInserido = parseInt(trocoInput);
     const troco = trocoInserido - total;
     if (trocoInput == "") {
+        
         dbSalvar();
         alert(`Compra finalizada!\nTotal: ${total.toFixed(2)}`);
         total = 0;
@@ -64,7 +65,6 @@ function finalizarCompra() {
     function dbSalvar() {
         
         const dataToSend = JSON.stringify(listaDeCompras);
-
         
         fetch('/salvar_dados', {
             method: 'POST',
@@ -79,6 +79,7 @@ function finalizarCompra() {
                 alert(responseText); 
                 listaDeCompras = []; 
                 atualizarLista(); 
+                console.log(responseText);
             })
             .catch(error => {
                 console.error('Error:', error);
