@@ -16,6 +16,7 @@
 
 <body>
 <?php $render('header'); ?>
+
     <div class="container">
         <div class="titulo_lista">
             <h2>Lista de Compras</h2>
