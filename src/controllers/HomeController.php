@@ -1,7 +1,9 @@
 <?php
 namespace src\controllers;
 
+
 use \core\Controller;
+use src\models\Venda;
 
 class HomeController extends Controller
 {
@@ -13,12 +15,24 @@ class HomeController extends Controller
 
     public function add()
     {
-        header("Access-Control-Allow-Headers: Content-type");
-        header("Access-Control-Allow-Methods: POST, GET");
-        header("Access-Control-Allow-Headers: *");
-        header('Content-Type: application/json');
-        $data = json_decode(file_get_contents('php://input'));
-        echo $data;
+        $venda = new Venda;
+        $inputJSON = file_get_contents('php://input');
+        $data = json_decode($inputJSON, true);
+        
+    
+
+        if(isset($data)){
+            foreach ($data as $valor){
+                $venda->insert([
+                    'produto' => addslashes($valor['produto']),
+                    'preco' => addslashes($valor['preco']),
+                    'data_time' => date('Y-m-d H:i:s')
+                ])->execute();
+            }
+        }
+
+
 
     }
 }
+?>

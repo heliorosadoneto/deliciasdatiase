@@ -7,15 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?=$base;?>/assets/css/reset.css">
-    <link rel="stylesheet" href="<?=$base;?>/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/reset.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <title>Delícias da Tia Sê</title>
 
 </head>
 
 
 <body>
-<?php $render('header'); ?>
+<?php $render('header');
+echo $base;?>
     <div class="container">
         <div class="titulo_lista">
             <h2>Lista de Compras</h2>
@@ -57,7 +58,7 @@
             ?>
         </div>
     </div>
-    <script src="<?=$base;?>/assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
     
 </body>
 

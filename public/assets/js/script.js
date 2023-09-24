@@ -34,7 +34,7 @@ function finalizarCompra() {
     const trocoInserido = parseInt(trocoInput);
     const troco = trocoInserido - total;
     if (trocoInput == "") {
-        
+
         dbSalvar();
         alert(`Compra finalizada!\nTotal: ${total.toFixed(2)}`);
         total = 0;
@@ -62,27 +62,27 @@ function finalizarCompra() {
         return;
     }
 
-    function dbSalvar() {
-        
-        const dataToSend = JSON.stringify(listaDeCompras);
-        
-        fetch('/salvar_dados', {
-            method: 'POST',
-            body: dataToSend,
+
+}
+async function dbSalvar() {
+    const dataToSend = JSON.stringify(listaDeCompras);
+    const url = '/salvar';
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.text())
-            .then(responseText => {
-                
-                alert(responseText); 
-                listaDeCompras = []; 
-                atualizarLista(); 
-                console.log(responseText);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                "Content-Type": "application/json",
+            },
+            body: dataToSend,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro na resposta do servidor: ${response.status}`);
+        }
+
+        await response.text();
+    } catch (error) {
+        console.log("Erro ao enviar a requisição:", error);
     }
 }

@@ -2,11 +2,11 @@
 namespace src;
 
 class Config {
-    const BASE_DIR = '/delicias/public';
+    const BASE_DIR = '/mvc/public';
 
     const DB_DRIVER = 'mysql';
     const DB_HOST = 'localhost';
-    const DB_DATABASE = 'delicias';
+    const DB_DATABASE = 'delicia';
     CONST DB_USER = 'root';
     const DB_PASS = '';
 

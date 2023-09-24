@@ -14,5 +14,7 @@ class Database {
 
     private function __construct() { }
     private function __clone() { }
-    private function __wakeup() { }
+
+    // Desativei pois estava bloqueando o inserimento de dados ao Mysql
+    //private function __wakeup() { }
 }

@@ -17,7 +17,6 @@ class Controller {
             $base .= ':'.$_SERVER['SERVER_PORT'];
         }
         $base .= Config::BASE_DIR;
-        
         return $base;
     }
 
@@ -26,6 +25,7 @@ class Controller {
             extract($viewData);
             $render = fn($vN, $vD = []) => $this->renderPartial($vN, $vD);
             $base = $this->getBaseUrl();
+            
             require '../src/views/'.$folder.'/'.$viewName.'.php';
         }
     }
