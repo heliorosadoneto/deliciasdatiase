@@ -13,7 +13,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        $loggedUser =  LoginHandlers::VerifyLogin();
+        $loggedUser =  '';
          if($loggedUser === false){
              $this->redirect('/login');
          }
