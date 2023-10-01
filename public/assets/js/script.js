@@ -4,7 +4,13 @@ let listaDeCompras = [];
 let total = 0;
 
 function adicionarProduto(produto, preco) {
-    listaDeCompras.push({ produto: produto, preco: preco });
+    const itemExistente = listaDeCompras.find(item => item.produto === produto);
+    if(itemExistente){
+        itemExistente.quantidade++;
+    }else{
+        listaDeCompras.push({produto, preco, quantidade: 1});
+    }
+    
     total += preco;
     atualizarLista();
 
@@ -18,11 +24,39 @@ function atualizarLista() {
     lista.innerHTML = "";
     listaDeCompras.forEach(item => {
         const listItem = document.createElement("li");
-        listItem.textContent = `${item.produto} - R$ ${item.preco.toFixed(2)}`;
+        listItem.innerHTML = `
+        <p> ${item.quantidade} X ${item.produto} - R$ ${item.preco.toFixed(2)}</p>
+        <div class="botaoContainer">
+        <button class="botaoUpDow" onclick="diminuirQuantidade('${item.produto}', ${item.preco})">-</button>
+        <button class="botaoUpDow" onclick="aumentarQuantidade('${item.produto}', ${item.preco})">+</button>
+        </div>
+        `;
         lista.appendChild(listItem);
     });
 
     totalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+}
+
+function diminuirQuantidade(produto, preco){
+    const itemExistenteIndex = listaDeCompras.findIndex(item => item.produto === produto);
+    if(itemExistenteIndex !== -1){
+        if(listaDeCompras[itemExistenteIndex].quantidade > 1){
+            listaDeCompras[itemExistenteIndex].quantidade --;
+            total -= preco;
+        }else{
+            listaDeCompras.splice(itemExistenteIndex, 1);
+            total -= preco;
+        }
+        atualizarLista();
+    }
+}
+function aumentarQuantidade(produto, preco){
+    const itemExistente = listaDeCompras.find(item => item.produto === produto);
+    if(itemExistente){
+        itemExistente.quantidade++;
+        total += preco;
+        atualizarLista();
+    }
 }
 
 function finalizarCompra() {
@@ -30,6 +64,7 @@ function finalizarCompra() {
         alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
         return;
     }
+    console.log(listaDeCompras);
     const trocoInput = prompt("Insira o Troco ou continue sem troco.");
     const trocoInserido = parseInt(trocoInput);
     const troco = trocoInserido - total;
@@ -63,10 +98,11 @@ function finalizarCompra() {
     }
 
 
+
 }
 async function dbSalvar() {
     const dataToSend = JSON.stringify(listaDeCompras);
-    const url = '/salvar';
+    const url = 'http://localhost/mvc/public/salvar';
 
     try {
         const response = await fetch(url, {
