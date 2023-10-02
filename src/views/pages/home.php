@@ -16,6 +16,8 @@
 
 <body>
 <?php $render('header');
+
+echo $_SESSION['user_id'];
 ?>
     <div class="container">
         <div class="titulo_lista">
