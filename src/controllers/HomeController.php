@@ -10,14 +10,14 @@ use src\models\Venda;
 class HomeController extends Controller
 {
 
-    public function __construct()
+   /* public function __construct()
     {
         session_start();
         if (CheckLogin::isLogged() === true) {
             $this->redirect('/login');
             
         }
-    }
+    }*/
 
     public function index()
     {
