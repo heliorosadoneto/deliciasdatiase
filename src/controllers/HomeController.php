@@ -2,8 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\handlers\CheckLogin;
-use src\handlers\LoginHandlers;
+use src\models\Produto;
 use src\models\Venda;
 
 
@@ -13,18 +12,21 @@ class HomeController extends Controller
     public function __construct()
     {
         session_start();
-        if (CheckLogin::isLogged() === true) {
+        if(!isset($_SESSION['id'])){
             $this->redirect('/login');
-            
         }
     }
 
     public function index()
     {
-        $this->render('home');
+        $produto = Produto::select()->get();
+        
+        $this->render('home', [
+            'produtos' => $produto
+        ]);
     }
 
-
+   
 
     public function add()
     {
@@ -42,7 +44,8 @@ class HomeController extends Controller
                     'produto' => addslashes($valor['produto']),
                     'preco' => addslashes($somaValorProduto),
                     'data' => date('Y-m-d'),
-                    'hora' => date('H:i:s')
+                    'hora' => date('H:i:s'),
+                    'tipo_venda' => $valor['tipo_venda']
                 ])->execute();
             }
         }

@@ -22,19 +22,23 @@ class LoginHandlers
             ->where('email', $email)
             ->where('senha', $senha)
             ->execute();
-            if ($user) {
-                // Inicie a sessão (se ainda não estiver iniciada)
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
+        if (count($user) > 0) {
+            foreach ($user as $users) {
+                session_start();
+                $_SESSION['id'] = $users['id'];
+
+
+                $caminho_http = 'http';
+
+                if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+                    $caminho_http .= 's';
                 }
-    
-                // Defina as informações de login na sessão
-                $_SESSION['user_id'] = $user->id;
-                $_SESSION['user_email'] = $user->email;
-    
-                return true;
-            } else {
-                return false;
+                
+                $caminho_http .= '://' . $_SERVER['HTTP_HOST'];
+                
+                header("Location: $caminho_http/mvc/public/");
+                exit;
             }
+        }
     }
 }

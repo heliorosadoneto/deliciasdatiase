@@ -3,8 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="<?= $base; ?>/assets/css/reset.css">
     <link rel="stylesheet" href="<?= $base; ?>/assets/css/style.css">
     <title>Delícias da Tia Sê</title>
@@ -13,15 +17,14 @@
 
 <body>
     <?php $render('header'); ?>
-    <form class="conteinerData" action="<?= $base ?>/read"
-        method="get">
+    <form class="conteinerData" action="<?= $base ?>/read" method="get">
         <label for="dataInicio">Início</label>
         <input type="date" req name="dataInicio" id="dataInicio">
         <label for="dataFinal">Final</label>
         <input type="date" name="dataFinal" id="dataFinal">
         <input type="submit" value="Buscar">
     </form>
-    <div class="container">
+    <div class="container_vendas">
 
         <table id="minhaTabela" width="100%">
             <tr>
@@ -30,10 +33,11 @@
                 <th>Preço</th>
                 <th>Data</th>
                 <th>Horas</th>
+                <th>Tipo de Venda</th>
             </tr>
             <?php
-            if (isset($stores) && !empty($stores)):
-                foreach ($stores as $store): ?>
+            if (isset($stores) && !empty($stores)) :
+                foreach ($stores as $store) : ?>
                     <tr>
                         <td>
                             <?= $store['un'] ?>
@@ -50,11 +54,14 @@
                         <td>
                             <?= $store['hora'] ?>
                         </td>
+                        <td>
+                            <?= $store['tipo_venda'] ?>
+                        </td>
                     </tr>
-                    <?php
+            <?php
                     $valores[] = $store['preco'];
                     $soma = 0;
-                    foreach ($valores as $valor):
+                    foreach ($valores as $valor) :
                         $soma += $valor;
 
                     endforeach;

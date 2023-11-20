@@ -14,20 +14,18 @@ class LoginController extends Controller
         $email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
         $senha = filter_input(INPUT_POST,'senha');
         if($email && $senha){
-            $login = LoginHandlers::VerifyLogin($email, $senha);
-            if($login === true){
-                $this->redirect('/');
-            }else{
-                $_SESSION['flash'] = 'E-mail e ou senha não conferem';
-                $this->redirect('/login');
-            }
+            LoginHandlers::VerifyLogin($email, $senha);
+            exit;
         }else{
-            $_SESSION['flash'] = 'Digite os campos de E-mail e senha novamente';
             $this->redirect('/login');
         }
     }
-    public function singnup(){
 
+    public function sair(){
+        session_start();
+        session_destroy();
+        $this->redirect('/login');
     }
+   
 }
 ?>

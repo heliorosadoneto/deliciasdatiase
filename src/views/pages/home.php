@@ -1,41 +1,51 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= $base;?>/assets/css/reset.css">
-    <link rel="stylesheet" href="<?= $base;?>/assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="<?= $base; ?>/assets/css/reset.css">
+    <link rel="stylesheet" href="<?= $base; ?>/assets/css/style.css">
     <title>Delícias da Tia Sê</title>
 
 </head>
 
 
 <body>
-<?php $render('header');
+    <?php $render('header');
 
-echo $_SESSION['user_id'];
-?>
+
+    ?>
+
     <div class="container">
-        <div class="titulo_lista">
-            <h2>Lista de Compras</h2>
-        </div>
         <div class="lista">
+
+            <div class="titulo_lista">
+                <h2>VENDAS</h2>
+            </div>
 
             <ul id="lista-de-compras"></ul>
 
         </div>
         <div>
             <p id="total">Total: R$ 0.00</p>
+        </div>
+
+        <div class="container_pagamento">
             <button onclick="finalizarCompra()">Finalizar
-                Compra</button>
+                A vista</button>
         </div>
         <div class="produtos">
             <?php
-            $produtos = [
+               
+             
+            /*$produtos = [
                 "Cachorro quente" => 10.00,
                 "Salgados" => 5.00,
                 "Salgado assado" => 6.00,
@@ -50,18 +60,24 @@ echo $_SESSION['user_id'];
                 "Achocolatado" => 5.00,
                 "Tridant" => 2.50
             ];
-
-            foreach ($produtos as $produto => $preco) {
-                $valor = number_format($preco, 2);
+*/
+            
+            
+              foreach ($produtos as $produto) {
+                $valor = number_format($produto['valor'], 2);
                 echo "<div class='produto'>
-                            <button onclick='adicionarProduto(\"$produto\", $preco)'>$produto - R$ $valor </button>
+                            <button onclick='adicionarProduto(\"$produto[nome]\", $produto[valor])'>$produto[nome] - R$ $valor </button>
                           </div>";
             }
+      
             ?>
+
         </div>
+
     </div>
-    <script src="<?= $base;?>/assets/js/script.js"></script>
-    
+
+    <script src="<?= $base; ?>/assets/js/script.js"></script>
+
 </body>
 
 </html>
