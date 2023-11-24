@@ -230,7 +230,12 @@ td{
     text-align: left;
 }
 
+/* contas a pagar css*/
 
+.conteiner_contas_pagar{
+    background-color: red;
+    display: flex;
+}
 
 @media (max-width: 600px) {
     

@@ -1,5 +1,6 @@
 <?php
 use core\Router;
+use src\controllers\ContasPagarController;
 
 $router = new Router();
 
@@ -16,6 +17,9 @@ $router->get('/read', 'VendaController@read');
 // contas a pagar
 
 $router->get('/contaspagar', 'ContasPagarController@index');
+$router->get('/contaspagarShow', 'ContasPagarController@show');
+$router->post('/contaspagar', 'ContasPagarController@add');
+$router->get('/contaspagar/{id}/edit', 'ContasPagarController@edit');
 
 
 

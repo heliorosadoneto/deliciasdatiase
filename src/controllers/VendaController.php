@@ -4,13 +4,17 @@ namespace src\controllers;
 use \core\Controller;
 use src\models\Venda;
 
+
 class VendaController extends Controller
 {
 
     public function index()
     
     {
-        
+        session_start();
+        if(!isset($_SESSION['id'])){
+            $this->redirect('/login');
+        }
         $this->render('vendas');
     }
 
