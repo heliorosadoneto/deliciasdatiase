@@ -3,21 +3,34 @@
 namespace src\controllers;
 
 use \core\Controller;
-use core\Request;
 use src\models\Conta;
 
 class ContasPagarController extends Controller
 {
     public function index()
     {
+        $time = 0;
+        session_set_cookie_params($time);
         session_start();
-        if(!isset($_SESSION['id'])){
+        if (!isset($_SESSION['id'])) {
             $this->redirect('/login');
         }
         $dados = Conta::select()
             ->get();
+
+        $dataInicio = $_GET['dataInicio'] ?? null;
+        $dataFinal = $_GET['dataFinal'] ?? null;
+        $typo = $_GET['tipo'] ?? null;
+
+            $pesquisas = Conta::select()
+                ->where('tipo', $typo)
+                ->where('vencimento', '>=', $dataInicio)
+                ->where('vencimento', '<=', $dataFinal)
+                ->get();
+        
         $this->render('contaspagar', [
-            'dados' => $dados
+            'dados' => $dados,
+            'pesquisas' => $pesquisas,
         ]);
     }
 
@@ -47,20 +60,5 @@ class ContasPagarController extends Controller
         $this->redirect('/contaspagar');
     }
 
-    public function show()
-    {
-        $dataInicio = $_GET['dataInicio'] ?? null;
-        $dataFinal = $_GET['dataFinal'] ?? null;
-        $typo = $_GET['tipo'] ?? null;
-
-        $pesquisas = Conta::select()
-        ->where('tipo',$typo)
-        ->where('vencimento', '>=', $dataInicio)
-        ->where('vencimento', '<=', $dataFinal)
-        ->get();
-
-        $this->render('contaspagar', [
-            'pesquisas' => $pesquisas,
-        ]);
-    }
+    
 }

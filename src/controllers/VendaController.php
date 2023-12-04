@@ -11,6 +11,8 @@ class VendaController extends Controller
     public function index()
     
     {
+        $time = 0;
+        session_set_cookie_params($time);
         session_start();
         if(!isset($_SESSION['id'])){
             $this->redirect('/login');

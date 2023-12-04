@@ -16,6 +16,8 @@ class LoginHandlers
 
 
 
+
+
     public static function VerifyLogin($email, $senha)
     {
         $user = User::select()
@@ -28,17 +30,43 @@ class LoginHandlers
                 $_SESSION['id'] = $users['id'];
 
 
-                $caminho_http = 'http';
+                $urlHttp = self::getUrlHttp();
+                if($urlHttp){
+                    header("location: $urlHttp/mvc/public/");
+
+                }else{
+                    header("location: $urlHttp/");
+                }
+                exit;
+
+                /*$caminho_http = 'http';
 
                 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
                     $caminho_http .= 's';
                 }
-                
+
                 $caminho_http .= '://' . $_SERVER['HTTP_HOST'];
-                
+
                 header("Location: $caminho_http/mvc/public/");
-                exit;
+                exit;*/
+            }
+        } else {
+            $urlHttp = self::getUrlHttp();
+            if($urlHttp){
+                header("location: $urlHttp/mvc/public/");
+
+            }else{
+                header("location: $urlHttp/");
             }
         }
+    }
+    public static function getUrlHttp()
+    {
+        $caminho_http = 'http';
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $caminho_http .= 's';
+        }
+        $caminho_http .= '://' . $_SERVER['HTTP_HOST'];
+        return $caminho_http;
     }
 }

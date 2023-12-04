@@ -219,11 +219,23 @@ stylizando form do campo store lable e input
 /*
 style in the table page store vendas
 */
+
+th{
+    background-color: white;
+}
 table, th, td {
     border: 1px solid black;
+    color: black;
+    
+    text-transform: uppercase;
+    font-weight: bold;
+    
+}
+table, th, td, a{
+    color: black;
 }
 td{
-    
+   
     text-align: center;
 }
 .produto{
@@ -231,11 +243,40 @@ td{
 }
 
 /* contas a pagar css*/
-
+/* container container_pesquisas*/
 .conteiner_contas_pagar{
-    background-color: red;
     display: flex;
+    justify-content: center;
+   
+    
 }
+
+.container_pesquisas{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 20px 0 ;
+    padding: 20px;
+    background-color: #f7adae;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.container_pesquisas_lista{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 20px 0 ;
+    padding: 20px;
+    background-color: #f7adae;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
 
 @media (max-width: 600px) {
     

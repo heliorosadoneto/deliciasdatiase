@@ -21,31 +21,32 @@
     <?php $render('header'); ?>
 
     <div class="conteiner_contas_pagar">
+        <div class="container_pesquisas">
+            <form class="conteinerData" action="<?= $base; ?>/contaspagar" method="post">
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" name="descricao">
+                <label for="valor">Valor:</label>
+                <input type="text" id="valor" name="valor">
+                <label for="vencimento">Vencimento:</label>
+                <input type="date" id="vencimento" name="vencimento">
+                <input type="submit" value="Salvar">
+            </form>
 
-        <form class="conteinerData" action="<?= $base; ?>/contaspagar" method="post">
-            <label for="descricao">Descrição:</label>
-            <input type="text" id="descricao" name="descricao">
-            <label for="valor">Valor:</label>
-            <input type="number" id="valor" name="valor">
-            <label for="vencimento">Vencimento:</label>
-            <input type="date" id="vencimento" name="vencimento"><br>
-            <input type="submit" value="Salvar">
-        </form>
-
-        <form class="conteinerData" action="<?= $base ?>/contaspagarShow" method="get">
-            <label for="dataInicio">Início</label>
-            <input type="date" req name="dataInicio" id="dataInicio">
-            <label for="dataFinal">Final</label>
-            <input type="date" name="dataFinal" id="dataFinal">
-            <select name="tipo">
-                <option value=""> </option>
-                <option name="1" value="1">Pagas</option>
-                <option name="0" value="0">Não pagas</option>
-            </select>
-            <input type="submit" value="Buscar">
-        </form>
-
+            <form class="conteinerData" action="<?= $base ?>/contaspagar" method="get">
+                <label for="dataInicio">Início</label>
+                <input type="date" req name="dataInicio" id="dataInicio">
+                <label for="dataFinal">Final</label>
+                <input type="date" name="dataFinal" id="dataFinal">
+                <select name="tipo">
+                    <option value=""> </option>
+                    <option value="1">Contas pagas</option>
+                    <option value="0">Contas à pagar</option>
+                </select>
+                <input type="submit" value="Buscar">
+            </form>
+        </div>
     </div>
+    <!-- Este codigo sera revisto futuramente###
     <div class="container_vendas">
 
         <table border="2" style="color: white; width: 100%;">
@@ -54,6 +55,7 @@
                     <th>Descrição</th>
                     <th>valor</th>
                     <th>Vencimento</th>
+                    <th>---------</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,23 +63,24 @@
                     if ($dado['tipo'] == '1') :
                 ?>
                         <tr>
-                            <td style="background-color: #04E000;">
+                            <td>
                                 <?= $dado['descricao'] ?> </td>
-                            <td style="background-color: #04E000;">
-                                <?= $dado['valor'] ?></td>
-                            <td style="background-color: #04E000;">
+                            <td>
+                                R$: <?= $dado['valor'] ?></td>
+                            <td>
                                 <?= $dado['vencimento'] ?></td>
-                            <td style="background-color: #04E000;"><a href="">Pago</a></td>
+                            <td><a href="">Pago</a></td>
                         </tr>
                     <?php elseif ($dado['tipo'] == '0') : ?>
                         <tr>
                             <td style="background-color: #DB180B;">
                                 <?= $dado['descricao'] ?> </td>
                             <td style="background-color: #DB180B;">
-                                <?= $dado['valor'] ?></td>
+                                R$: <?= $dado['valor'] ?></td>
                             <td style="background-color: #DB180B;">
-                                <?= $dado['vencimento'] ?></td>
-                            <td style="background-color: #DB180B;"><a href="<?= $base; ?>/contaspagar/<?= $dado['id'] ?>/edit">Pago</a></td>
+                                <?= $dado['vencimento']; ?></td>
+                            <td style="background-color: #DB180B;"><a href="<?= $base; ?>/contaspagar/<?= $dado['id'] ?>/edit">Não
+                                    Pago</a></td>
                         </tr>
                 <?php
                     endif;
@@ -85,60 +88,65 @@
             </tbody>
         </table>
     </div>
+    -->
+    <div>
+        <h4></h4>
+    </div>
+    <div class="container_vendas">
+        <table border="2" style="color: white; width: 100%;">
+            <thead>
+                <tr>
 
-    <div class="box">
-        <?php 
-        
-        foreach($pesquisas as $pesquisa){
-            var_dump($pesquisa);
-        }
-        
-        
-        ?>
+                    <?php if ($pesquisas) :
 
+                        foreach ($pesquisas as $pesquisa) :
+                        endforeach;
 
+                        if ($pesquisa['tipo'] == '1') :
+                    ?>
+                            <th colspan="4">Contas pagas</th>
+                        <?php
+                        elseif ($pesquisa['tipo'] == '0') :
+                        ?>
+                            <th colspan="4">Contas à pagar</th>
+                        <?php
+                        endif;                  ?>
+                </tr>
 
+            </thead>
+            <tbody>
+                <?php foreach ($pesquisas as $pesquisa) :
+                            if ($pesquisa['tipo'] == '1') :
+                ?>
+                        <tr>
+                            <td>
+                                <?= $pesquisa['descricao'] ?> </td>
+                            <td>
+                                R$: <?= $pesquisa['valor'] ?></td>
+                            <td>
+                                <?= $pesquisa['vencimento'] ?></td>
+                            <td><a href="*">Pago</a></td>
+                        </tr>
+                    <?php elseif ($pesquisa['tipo'] == '0') : ?>
+                        <tr>
+                            <td style="background-color: #DB180B;">
+                                <?= $pesquisa['descricao'] ?> </td>
+                            <td style="background-color: #DB180B;">
+                                R$: <?= $pesquisa['valor'] ?></td>
+                            <td style="background-color: #DB180B;">
+                                <?= $pesquisa['vencimento'] ?></td>
+                            <td style="background-color: #DB180B;"><a href="<?= $base; ?>/contaspagar/<?= $pesquisa['id'] ?>/edit">Não
+                                    Pago</a></td>
+                        </tr>
+            <?php
+                            endif;
+                        endforeach;
+                    endif;
+            ?>
+            </tbody>
+        </table>
 
-    <script>
-        /*
-        const listaItens = [];
-        const adicionarMaisInput = document.querySelector('#adicionarMaisInput');
-        const salvarDados = document.querySelector('#salvarDados');
-
-            salvarDados.addEventListener('click', () => {
-                const divs = document.querySelectorAll('#container_contas div');
-                divs.forEach(div => {
-                    const input = div.querySelectorAll('input');
-                    const nome = input[0].value;
-                    const valor = input[1].value;
-                    const vencendo = input[2].value;
-                    const itens = {
-                        nome: nome,
-                        valor: valor,
-                        vencendo:vencendo
-                        
-                    }
-
-                    listaItens.push(itens);
-                    console.log(listaItens);
-                })
-            });
-
-        adicionarMaisInput.addEventListener('click', () => {
-                    const container = document.querySelector('#container_contas div');
-                    const div = document.createElement('div');
-                    container.insertAdjacentHTML('beforeend', `
-                        <label for="nome">Nome:</label>
-                        <input type="text" id="nome">
-                        <label for="valor">Valor:</label>
-                        <input type="number" id="valor">
-                        <label for="vencendo">Vencendo:</label>
-                        <input type="date" id="vencendo"><br/>
-                        `);
-                    
-            
-        });*/
-    </script>
+    </div>
 
 </body>
 
